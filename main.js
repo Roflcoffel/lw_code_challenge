@@ -1,5 +1,5 @@
 //main.js
-const url = "http://api.scb.se/OV0104/v1/doris/sv/ssd/ME/ME0104/ME0104D/ME0104T4"
+const url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/ME/ME0104/ME0104D/ME0104T4"
 
 $(document).ready(function() {
         var scb = new Scb(url);
