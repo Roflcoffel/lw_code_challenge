@@ -3,27 +3,22 @@
 //           |
 //           -> code, text, elimination, time, valuues, valueTexts
 
-//scb structure for datatables
-//code, text, type, unit
-
 class MetaTable {
         constructor(scbMetatable) {
                 this.title = scbMetatable.title;
                 this.regions = {};
-                //this.regions = {"key":scbMetatable.variables[0].values, "value":scbMetatable.variables[0].valueTexts };
+                
+                //key       : value
+                //region_id : region_name
                 for (let i = 0; i < scbMetatable.variables[0].values.length; i++) {
                         this.regions[scbMetatable.variables[0].values[i]] = scbMetatable.variables[0].valueTexts[i];
                 }
+
+                this.years = scbMetatable.variables[2].values;
         }
 
         Print() {
-                //for (const region in this.regions) {
-                //        $(".left").append(
-                //               "<p>" + region.value + " : " + region.key + "</p>"
-                //        );
-                //}
               
         }
-
 
 }

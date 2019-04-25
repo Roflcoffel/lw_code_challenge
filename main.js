@@ -16,11 +16,8 @@ $(document).ready(function() {
         //Combine Data;
         Promise.all([meta, data])
         .then(values => {
-                console.log(values[0]);
-                console.log(values[1]);
                 var turnout = new Turnout(values[1], values[0]);
+                turnout.dataTable.data = turnout.Highest_Per_Year();
                 turnout.Print();
         })
-
-        //Hitta den högsta turnouten per år;
 })

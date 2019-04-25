@@ -6,20 +6,31 @@ class Turnout {
         }
 
         Print() {
-                for (let i = 0; i < this.dataTable.size; i++) {
+                this.dataTable.data.forEach(data => {
                         $(".left").append(
-                                "<p>" + this.metaTable.regions[this.dataTable.region_ids[i]] + "\
-                                 : " + this.dataTable.precentages[i] + "%\
-                                 : " + this.dataTable.years[i] + "</p>"
+                                "<p>" + data["year"] + "\
+                                : " + this.metaTable.regions[data["region_id"]] + "\
+                                : " + data["percentage"] + "%</p>"
                         );
+                })
+        }
 
-                        /*$(".middle").append(
-                                "<p>" + this.dataTable.precentages[i] + "</p>"
-                        )
+        //Highest percent turnout per year
+        //returns new array
+        Highest_Per_Year() {
+                var highest = [];
+                this.metaTable.years.forEach(year => {
+                        var perYear = this.dataTable.data.filter(obj => obj["year"] == year);
 
-                        $(".right").append(
-                                "<p>" + this.dataTable.years[i] + "</p>"
-                        );*/
-                }
+                        var largest = perYear[0];
+                        perYear.forEach((obj) => {
+                                if(obj["percentage"] > largest["percentage"]) {
+                                        largest = obj;
+                                }
+                        })
+
+                        highest.push(largest);
+                });
+                return highest;
         }
 }
