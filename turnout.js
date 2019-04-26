@@ -33,18 +33,18 @@ class Turnout {
                 this.metaTable.years.forEach(year => {
                         var perYear = this.dataTable.data.filter(obj => obj["year"] == year);
 
-                        var largest = perYear[0];
+                        var curLargest = perYear[0];
                         perYear.forEach((obj) => {
-                                if(obj["percentage"] > largest["percentage"]) {
-                                        largest = obj;
+                                if(obj["percentage"] > curLargest["percentage"]) {
+                                        curLargest = obj;
 
-                                } else if(obj["percentage"] == largest["percentage"] 
-                                        && obj["region_id"] != largest["region_id"]) {
-                                        largest["region_id_extra"] = obj["region_id"]
+                                } else if(obj["percentage"] == curLargest["percentage"] 
+                                        && obj["region_id"] != curLargest["region_id"]) {
+                                                curLargest["region_id_extra"] = obj["region_id"]
                                 }
                         })
 
-                        highest.push(largest);
+                        highest.push(curLargest);
                 });
                 return highest;
         }
