@@ -7,11 +7,22 @@ class Turnout {
 
         Print() {
                 this.dataTable.data.forEach(data => {
-                        $(".left").append(
-                                "<p>" + data["year"] + "\
-                                : " + this.metaTable.regions[data["region_id"]] + "\
-                                : " + data["percentage"] + "%</p>"
-                        );
+                        if(data["region_id_extra"] != null) {
+                                $(".left").append(
+                                        "<p>" + data["year"] + "\
+                                        : " + this.metaTable.regions[data["region_id"]] + ",\
+                                        " + this.metaTable.regions[data["region_id_extra"]] + "\
+                                        : " + data["percentage"] + "%</p>"
+                                );
+                        }
+                        else {
+                                $(".left").append(
+                                        "<p>" + data["year"] + "\
+                                        : " + this.metaTable.regions[data["region_id"]] + "\
+                                        : " + data["percentage"] + "%</p>"
+                                );
+                        }
+                       
                 })
         }
 
@@ -26,6 +37,10 @@ class Turnout {
                         perYear.forEach((obj) => {
                                 if(obj["percentage"] > largest["percentage"]) {
                                         largest = obj;
+
+                                } else if(obj["percentage"] == largest["percentage"] 
+                                        && obj["region_id"] != largest["region_id"]) {
+                                        largest["region_id_extra"] = obj["region_id"]
                                 }
                         })
 
