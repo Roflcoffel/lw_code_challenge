@@ -12,12 +12,16 @@ $(document).ready(function() {
 
         var meta = scb.GetMetaTable().promise();
         var data = scb.Post(query).promise();
-
+        
         //Combine Data;
         Promise.all([meta, data])
         .then(values => {
                 var turnout = new Turnout(values[1], values[0]);
                 turnout.dataTable.data = turnout.Highest_Per_Year();
                 turnout.Print();
+        })
+        .catch((error) => {
+                console.log("Error: when checking promise");
+                console.log(error);
         })
 })
