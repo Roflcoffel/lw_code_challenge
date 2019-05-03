@@ -7,45 +7,47 @@ class Turnout {
 
         Print() {
                 this.dataTable.data.forEach(data => {
-                        if(data["region_id_extra"] != null) {
-                                $(".left").append(
-                                        "<p>" + data["year"] + "\
-                                        : " + this.metaTable.regions[data["region_id"]] + ",\
-                                        " + this.metaTable.regions[data["region_id_extra"]] + "\
-                                        : " + data["percentage"] + "%</p>"
-                                );
-                        }
-                        else {
-                                $(".left").append(
-                                        "<p>" + data["year"] + "\
-                                        : " + this.metaTable.regions[data["region_id"]] + "\
-                                        : " + data["percentage"] + "%</p>"
-                                );
-                        }
-                       
+                        var year_string = "<p>" + data["year"] + " : ";
+                        var ids_string = "";
+                        data.region_id.forEach(id => {
+                                ids_string = ids_string + this.metaTable.regions[id] + ", "
+                        })
+                        var data_string = " : " + data["percentage"] + "%</p>";
+                        
+                        $(".left").append(
+                                year_string + ids_string.slice(0, -2) + data_string
+                        );
                 })
         }
 
+        
         //Highest percent turnout per year
-        //returns new array
-        Highest_Per_Year() {
+        //Modifies datatables.data
+        SortHighest() {
                 var highest = [];
                 this.metaTable.years.forEach(year => {
                         var perYear = this.dataTable.data.filter(obj => obj["year"] == year);
 
-                        var curLargest = perYear[0];
+                        //Sort
+                        var curHighest = perYear[perYear.length-1];
+                        var sortedHighest = [];
                         perYear.forEach((obj) => {
-                                if(obj["percentage"] > curLargest["percentage"]) {
-                                        curLargest = obj;
-
-                                } else if(obj["percentage"] == curLargest["percentage"] 
-                                        && obj["region_id"] != curLargest["region_id"]) {
-                                                curLargest["region_id_extra"] = obj["region_id"]
+                                if(obj["percentage"] >= curHighest["percentage"]) {
+                                        curHighest = obj;
+                                        sortedHighest.push(obj);
                                 }
                         })
 
-                        highest.push(curLargest);
+                        //Find Duplicates
+                        var curYearHighest = sortedHighest[sortedHighest.length-1];
+                        highest.push(curYearHighest);
+                        for (let i = sortedHighest.length-2; i >= 0; i--) {
+                                if(curYearHighest["percentage"] != sortedHighest[i]["percentage"]) {
+                                        break;
+                                }
+                                highest[highest.length-1]["region_id"].push(sortedHighest[i]["region_id"][0])
+                        }
                 });
-                return highest;
+                this.dataTable.data = highest;
         }
 }

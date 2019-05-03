@@ -17,7 +17,7 @@ $(document).ready(function() {
         Promise.all([meta, data])
         .then(values => {
                 var turnout = new Turnout(values[1], values[0]);
-                turnout.dataTable.data = turnout.Highest_Per_Year();
+                turnout.SortHighest();
                 turnout.Print();
         })
         .catch((error) => {

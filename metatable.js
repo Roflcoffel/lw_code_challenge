@@ -18,7 +18,7 @@ class MetaTable {
         }
 
         Print() {
-              
+              console.log(this);
         }
 
 }
